@@ -1,7 +1,8 @@
 ﻿using System;
-namespace Photos.Common
+namespace Photos
 {
     public interface CameraInterface
     {
+        void BringUpPhotoGallery();
     }
 }

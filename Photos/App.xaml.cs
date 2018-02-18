@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace Photos
 {
@@ -8,7 +9,9 @@ namespace Photos
         {
             InitializeComponent();
 
-            MainPage = new PhotosPage();
+           MainPage = new NavigationPage(new PhotosPage());
+           //MainPage = new PhotosPage();
+               
         }
 
         protected override void OnStart()
@@ -20,6 +23,8 @@ namespace Photos
         {
             // Handle when your app sleeps
         }
+
+
 
         protected override void OnResume()
         {

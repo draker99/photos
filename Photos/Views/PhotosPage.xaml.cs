@@ -2,8 +2,13 @@
 using System.IO;
 using Microsoft.WindowsAzure.MobileServices;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml.Internals;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System;
+
+
+
 
 namespace Photos
 {
@@ -13,17 +18,10 @@ namespace Photos
         public PhotosPage()
         {
             InitializeComponent();
-
+         
             UserPicture p = new UserPicture();
             pic = new ObservableCollection<UserPicture>();
-
-
-            // Handling my events
-            b_addimage.Clicked += (sender, e) =>
-            {
-                this.GetPhoto();
-            };
-                      
+            lstView.ItemsSource = pic;
 
             // Getting data back from native system
             MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", (args) =>
@@ -35,14 +33,13 @@ namespace Photos
                     p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
                     i_picture.Source = p.Picture;
                     pic.Add(new UserPicture(p.Picture));
-                    lstView.ItemsSource = pic;
                     Debug.WriteLine("I am the Message Center" +  pic.Count);
                 });
             });
          
         }
 
-         void GetPhoto()   {
+        void GetPhoto(object sender, EventArgs e)   {
          
             Device.BeginInvokeOnMainThread(() =>
              {
@@ -51,6 +48,22 @@ namespace Photos
             
               });
 
+        }
+
+        void AddComment(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new CommentPage());
+        }
+
+
+        void tapped_listview(object sender, ItemTappedEventArgs e)
+        {
+            if (e.Item != null)
+            {
+                UserPicture up = (UserPicture)e.Item;
+                i_picture.Source = up.Picture;
+            }
+            Debug.WriteLine("Tapped Listview"+ e.Item);
         }
 
     /*    public async void Insert()   {

@@ -1,45 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:Photos" x:Class="Photos.PhotosPage">
-
-
-
-<Grid Padding="5">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:local="clr-namespace:Photos" 
+    x:Class="Photos.PhotosPage"  
+    xmlns:control="clr-namespace:CarouselView.FormsPlugin.Abstractionse;assembly=CarouselView.FormsPlugin.Abstractions"
+    >
+  
+ 
+ <ContentPage.ToolbarItems>  
+  <ToolbarItem Name="Add" Text="Add"  
+                Priority="0" Order="Primary"
+                Clicked="GetPhoto"
+                />  
+  <ToolbarItem Name="Comment" Text="Comment"  
+                Priority="0" Order="Primary"
+                Clicked="AddComment"
+                />  
+  </ContentPage.ToolbarItems>  
+   
+<Grid>
   <Grid.RowDefinitions>
-    <RowDefinition Height="40"/>
+    <RowDefinition Height="5"/>
     <RowDefinition Height="*" />
-    <RowDefinition Height="*" />
+
   </Grid.RowDefinitions>
   <Grid.ColumnDefinitions>
     <ColumnDefinition Width="*" />
   </Grid.ColumnDefinitions>
- 
 
-  <StackLayout Padding="10" Grid.Row="0" Grid.Column="0">          
-      <Button x:Name="b_addimage" Text="Add Image" ></Button>
-  </StackLayout>
   <StackLayout Grid.Row="1" Grid.Column="0">
-     <Image x:Name="i_picture" Aspect="AspectFit"/>
+     <Image x:Name="i_picture" Aspect="AspectFill" HorizontalOptions="Fill" VerticalOptions="Fill" />
   </StackLayout>
 
-
+  
   <ScrollView Grid.Row="2" Grid.Column="0" Orientation='Both'>         
-    <ListView  x:Name="lstView" RowHeight="60">
-            <ListView.ItemTemplate>
+          
+    <ListView  x:Name="lstView" RowHeight="200" ItemTapped="tapped_listview">
+            <ListView.ItemTemplate >
                 <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" BackgroundColor="Olive">
-                            <Image Source="{Binding Image}" HorizontalOptions="End" AbsoluteLayout.LayoutBounds="250.25, 0.25, 50, 50 "/>
-                        </StackLayout>
+                    <ViewCell>                       
+                            <Image Source="{Binding Picture}"/>                        
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
     </ScrollView>
-
+  
   
 </Grid>
+
+  
+       
+ 
 
 
 </ContentPage>
