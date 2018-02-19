@@ -6,6 +6,9 @@ using Microsoft.WindowsAzure;
 using Foundation;
 using UIKit;
 
+
+
+
 namespace Photos.iOS
 {
     [Register("AppDelegate")]
@@ -15,6 +18,7 @@ namespace Photos.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
+            global::CarouselView.FormsPlugin.iOS.CarouselViewRenderer.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

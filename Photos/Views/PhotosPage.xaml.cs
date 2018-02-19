@@ -8,8 +8,6 @@ using System.Collections.ObjectModel;
 using System;
 
 
-
-
 namespace Photos
 {
     public partial class PhotosPage : ContentPage
@@ -21,22 +19,23 @@ namespace Photos
          
             UserPicture p = new UserPicture();
             pic = new ObservableCollection<UserPicture>();
-            lstView.ItemsSource = pic;
+            CarouselPics.ItemsSource = pic;
+
+            //lstView.ItemsSource = pic;
 
             // Getting data back from native system
             MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", (args) =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    //Set the source of the image view with the byte array
+                //Set the source of the image view with the byte array
+
+                p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
+                pic.Add(new UserPicture(p.Picture));
+                Debug.WriteLine("I am the Message Center" +  pic.Count);
                    
-                    p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
-                    i_picture.Source = p.Picture;
-                    pic.Add(new UserPicture(p.Picture));
-                    Debug.WriteLine("I am the Message Center" +  pic.Count);
                 });
-            });
-         
+            }); 
         }
 
         void GetPhoto(object sender, EventArgs e)   {
@@ -47,7 +46,6 @@ namespace Photos
                 DependencyService.Get<CameraInterface>().BringUpPhotoGallery();
             
               });
-
         }
 
         void AddComment(object sender, EventArgs e)
@@ -61,7 +59,7 @@ namespace Photos
             if (e.Item != null)
             {
                 UserPicture up = (UserPicture)e.Item;
-                i_picture.Source = up.Picture;
+              //  i_picture.Source = up.Picture;
             }
             Debug.WriteLine("Tapped Listview"+ e.Item);
         }

@@ -4,40 +4,75 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     xmlns:local="clr-namespace:Photos" 
-    x:Class="Photos.PhotosPage"  
-    xmlns:control="clr-namespace:CarouselView.FormsPlugin.Abstractionse;assembly=CarouselView.FormsPlugin.Abstractions"
-    >
-  
- 
+    x:Class="Photos.PhotosPage"
+    xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+
+   
+
  <ContentPage.ToolbarItems>  
-  <ToolbarItem Name="Add" Text="Add"  
-                Priority="0" Order="Primary"
+  <ToolbarItem  
+                Priority="1" Order="Primary"
                 Clicked="GetPhoto"
+                Icon="plus.png"
+               
                 />  
-  <ToolbarItem Name="Comment" Text="Comment"  
-                Priority="0" Order="Primary"
+  <ToolbarItem  Name="Comment" Text="Comment"  
+                Priority="1" Order="Primary"
                 Clicked="AddComment"
                 />  
   </ContentPage.ToolbarItems>  
-   
 <Grid>
   <Grid.RowDefinitions>
     <RowDefinition Height="5"/>
     <RowDefinition Height="*" />
+
 
   </Grid.RowDefinitions>
   <Grid.ColumnDefinitions>
     <ColumnDefinition Width="*" />
   </Grid.ColumnDefinitions>
 
-  <StackLayout Grid.Row="1" Grid.Column="0">
-     <Image x:Name="i_picture" Aspect="AspectFill" HorizontalOptions="Fill" VerticalOptions="Fill" />
+<!-- ItemsSource="{Binding UserPicture}" -->
+  <ContentView Grid.Row="1" Grid.Column="0">
+   <cv:CarouselViewControl AnimateTransition="true" ShowArrows="true" ShowIndicators="true" Orientation="Horizontal" x:Name="CarouselPics" >
+    <cv:CarouselViewControl.ItemTemplate>
+      <DataTemplate>
+          <Image Source="{Binding Picture}"/>          
+      </DataTemplate>
+    </cv:CarouselViewControl.ItemTemplate>
+  </cv:CarouselViewControl>
+  </ContentView>      
+
+        
+  <StackLayout Grid.Row="2" Grid.Column="0" Scale="1">
+  <ScrollView Grid.Row="2" Grid.Column="0" Orientation='Both'>              
+    <ListView  x:Name="lstView" ItemTapped="tapped_listview">
+            <ListView.ItemTemplate >
+                <DataTemplate>
+                    <ViewCell>                       
+                            <Label Text="Test"/>                        
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>
   </StackLayout>
 
-  
+
+
+  <!--
+    <cv:CarouselViewControl x:Name="carousel"
+        ItemsSource="{Binding MyItemsSource}"
+        ShowArrows="true"
+        ShowIndicators="true"
+        PositionSelectedCommand="{Binding MyCommand}"
+        Orientation="Horizontal">
+    </cv:CarouselViewControl>
+   -->
+  <!--
   <ScrollView Grid.Row="2" Grid.Column="0" Orientation='Both'>         
           
-    <ListView  x:Name="lstView" RowHeight="200" ItemTapped="tapped_listview">
+    <ListView  x:Name="lstView" ItemTapped="tapped_listview">
             <ListView.ItemTemplate >
                 <DataTemplate>
                     <ViewCell>                       
@@ -47,13 +82,9 @@
             </ListView.ItemTemplate>
         </ListView>
     </ScrollView>
-  
-  
+  -->
 </Grid>
 
-  
-       
- 
-
+   
 
 </ContentPage>
