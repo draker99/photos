@@ -10,21 +10,32 @@ namespace Photos
     public partial class CommentPage : ContentPage
     {
         public ObservableCollection<PictureComment> comment { get; set; }
-
+        protected int pic_id;
         public CommentPage()
         {
             InitializeComponent();
 
             comment = new ObservableCollection<PictureComment>();
-            commentLstView.ItemsSource = comment;
+
+        }
+
+        public CommentPage(int current_pic_id, UserPicture pic)
+        {
+            InitializeComponent();
+            this.pic_id = current_pic_id;
+
+            i_comment.Source = pic.Picture;
+            comment = new ObservableCollection<PictureComment>();
+
         }
 
         void SaveComment (object sender, EventArgs e)
         {
-            
+
             //comment.Add(new PictureComment())
-            var text = ((Editor)sender).Text;
-            comment.Add(new PictureComment(text));
+            var text = editor.Text;
+
+            comment.Add(new PictureComment(text,this.pic_id.ToString()));
             Debug.WriteLine("Comment saved" + text);
         }
     }

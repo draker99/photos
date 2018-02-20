@@ -179,6 +179,7 @@
     <BundleResource Include="Resources\auto.jpg" />
     <BundleResource Include="Resources\note-write-7.png" />
     <BundleResource Include="Resources\plus-simple-7.png" />
+    <BundleResource Include="Resources\message-7.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

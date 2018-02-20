@@ -5,28 +5,24 @@
 
     <Grid>
   <Grid.RowDefinitions>
-    <RowDefinition Height="5"/>
+    <RowDefinition Height="5" />
     <RowDefinition Height="*" />
   </Grid.RowDefinitions>
   <Grid.ColumnDefinitions>
     <ColumnDefinition Width="*" />
+    <ColumnDefinition Width="*" />
+
+                    
   </Grid.ColumnDefinitions>
 
-  <Editor Text="Place your comment here" Grid.Row="1" Grid.Column="0" Completed="SaveComment">
+  <Editor x:Name="editor" Text="Place your comment here" Grid.Row="1" Grid.Column="1">
   </Editor>
 
-    <ScrollView Grid.Row="2" Grid.Column="0">              
-    <ListView  x:Name="commentLstView">
-            <ListView.ItemTemplate >
-                <DataTemplate>
-                    <ViewCell>                       
-                            <Label Text="{Binding Comment}"></Label>                   
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </ScrollView>
-  </Grid>
+  <Image x:Name="i_comment" Grid.Row="1" Grid.Column="0"></Image>
+            
+            
+   <Button Text="Post Comment" Grid.Row="2" Grid.Column="2" Clicked="SaveComment"> </Button>
+   </Grid>
 	</ContentPage.Content>
     
 </ContentPage>

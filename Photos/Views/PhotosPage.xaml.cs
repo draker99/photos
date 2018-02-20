@@ -13,6 +13,9 @@ namespace Photos
     public partial class PhotosPage : ContentPage
     {
         public ObservableCollection<UserPicture> pic { get; set; }
+        public UserPicture up = null;
+        public int counter = 0;
+        public int current_pic_id = 0;
         public PhotosPage()
         {
             InitializeComponent();
@@ -32,7 +35,10 @@ namespace Photos
                 //Set the source of the image view with the byte array
 
                 p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
-                pic.Add(new UserPicture(p.Picture));
+                    pic.Add(new UserPicture(p.Picture,counter.ToString()));
+                    counter++;
+
+
                 Debug.WriteLine("I am the Message Center" +  pic.Count);
                    
                 });
@@ -43,18 +49,31 @@ namespace Photos
          
             Device.BeginInvokeOnMainThread(() =>
              {
-
-                DependencyService.Get<CameraInterface>().BringUpPhotoGallery();
-            
+                DependencyService.Get<CameraInterface>().BringUpPhotoGallery();            
               });
         }
 
         void AddComment(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new CommentPage());
+            Navigation.PushAsync(new CommentPage(current_pic_id,pic[current_pic_id]));
         }
 
+        void pos_sel(object sender, CarouselView.FormsPlugin.Abstractions.PositionSelectedEventArgs e) 
+        {
 
+            /*   if(CarouselPics.ItemsSource != null) {
+                   up = (UserPicture)CarouselPics.ItemsSource
+               }
+   */
+            if (pic.Count != 0)
+            {
+                current_pic_id = e.NewValue;
+                l_counter.Text = counter.ToString() + "/" + e.NewValue.ToString() + "/" + pic[e.NewValue].Id;
+            }
+            Debug.WriteLine("something happend" );    
+        }
+
+        /* deprecated */
         void tapped_listview(object sender, ItemTappedEventArgs e)
         {
             if (e.Item != null)

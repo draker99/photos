@@ -21,5 +21,11 @@ namespace Photos
         {
             this.Comment = comment;
         }
+
+        public PictureComment(string comment, string pic_id)
+        {
+            this.Comment = comment;
+            this.Id = pic_id;
+        }
     }
 }

@@ -19,12 +19,13 @@
   <ToolbarItem  Name="Comment" Text="Comment"  
                 Priority="1" Order="Primary"
                 Clicked="AddComment"
-                Icon="note-write-7.png"
+                Icon="message-7.png"
                 />  
   </ContentPage.ToolbarItems>  
 <Grid>
   <Grid.RowDefinitions>
     <RowDefinition Height="5"/>
+    <RowDefinition Height="*" />
     <RowDefinition Height="*" />
 
 
@@ -35,7 +36,14 @@
 
 <!-- ItemsSource="{Binding UserPicture}" -->
   <ContentView Grid.Row="1" Grid.Column="0">
-   <cv:CarouselViewControl AnimateTransition="true" ShowArrows="true" ShowIndicators="true" Orientation="Horizontal" x:Name="CarouselPics" >
+   <cv:CarouselViewControl 
+                PositionSelected="pos_sel" 
+                AnimateTransition="true" 
+                ShowArrows="true" 
+                Orientation="Horizontal" 
+                x:Name="CarouselPics" 
+                ArrowsBackgroundColor="Red"
+                >
     <cv:CarouselViewControl.ItemTemplate>
       <DataTemplate>
           <Image Source="{Binding Picture}"/>          
@@ -44,9 +52,9 @@
   </cv:CarouselViewControl>
   </ContentView>      
 
-        
-  <StackLayout Grid.Row="2" Grid.Column="0" Scale="1">
-  <ScrollView Grid.Row="2" Grid.Column="0" Orientation='Both'>              
+  <Label x:Name="l_counter" Text="Please select your pictures with the + sign!" Grid.Row="2"></Label>     
+  
+  <ScrollView Grid.Row="3" Grid.Column="0" Orientation='Both'>              
     <ListView  x:Name="lstView" ItemTapped="tapped_listview">
             <ListView.ItemTemplate >
                 <DataTemplate>
@@ -57,7 +65,7 @@
             </ListView.ItemTemplate>
         </ListView>
     </ScrollView>
-  </StackLayout>
+  
 
 
 

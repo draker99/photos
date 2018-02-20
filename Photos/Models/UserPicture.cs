@@ -11,9 +11,10 @@ namespace Photos
         public ImageSource Picture { get; set; }
             
 
-        public UserPicture(ImageSource picture)
+        public UserPicture(ImageSource picture, string id)
         {
             this.Picture = picture;
+            this.Id = id;
         }
 
         public UserPicture()
