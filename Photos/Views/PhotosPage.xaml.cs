@@ -21,6 +21,7 @@ namespace Photos
             pic = new ObservableCollection<UserPicture>();
             CarouselPics.ItemsSource = pic;
 
+
             //lstView.ItemsSource = pic;
 
             // Getting data back from native system

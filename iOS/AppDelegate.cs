@@ -21,6 +21,7 @@ namespace Photos.iOS
             global::CarouselView.FormsPlugin.iOS.CarouselViewRenderer.Init();
             LoadApplication(new App());
 
+          //  UINavigationBar.Appearance.BarTintColor = UIColor.White;
             return base.FinishedLaunching(app, options);
         }
     }

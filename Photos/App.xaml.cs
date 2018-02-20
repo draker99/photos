@@ -9,7 +9,10 @@ namespace Photos
         {
             InitializeComponent();
 
-           MainPage = new NavigationPage(new PhotosPage());
+           MainPage = new NavigationPage(new PhotosPage())
+            {
+                BarTextColor = Color.Black
+            };
            //MainPage = new PhotosPage();
                
         }

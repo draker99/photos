@@ -10,15 +10,16 @@
    
 
  <ContentPage.ToolbarItems>  
-  <ToolbarItem  
+  <ToolbarItem  Text="Add"
                 Priority="1" Order="Primary"
                 Clicked="GetPhoto"
-                Icon="plus.png"
-               
+                Icon="plus-simple-7.png"
+
                 />  
   <ToolbarItem  Name="Comment" Text="Comment"  
                 Priority="1" Order="Primary"
                 Clicked="AddComment"
+                Icon="note-write-7.png"
                 />  
   </ContentPage.ToolbarItems>  
 <Grid>
