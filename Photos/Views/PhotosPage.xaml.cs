@@ -14,6 +14,7 @@ namespace Photos
     {
         public ObservableCollection<UserPicture> pic { get; set; }
         public UserPicture up = null;
+        public ObservableCollection<PictureComment> comment { get; set; }
         public int counter = 0;
         public int current_pic_id = 0;
         public PhotosPage()
@@ -22,11 +23,21 @@ namespace Photos
          
             UserPicture p = new UserPicture();
             pic = new ObservableCollection<UserPicture>();
+            comment = new ObservableCollection<PictureComment>();
             CarouselPics.ItemsSource = pic;
+            lstView.ItemsSource = comment;
+            layout_editor.IsVisible = false;
 
 
-            //lstView.ItemsSource = pic;
+            Image img = new Image
+            {
+                Source = "photo_begin"
+            };
 
+            pic.Add(new UserPicture(img.Source, "0"));
+
+
+           
             // Getting data back from native system
             MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", (args) =>
             {
@@ -38,7 +49,6 @@ namespace Photos
                     pic.Add(new UserPicture(p.Picture,counter.ToString()));
                     counter++;
 
-
                 Debug.WriteLine("I am the Message Center" +  pic.Count);
                    
                 });
@@ -46,7 +56,7 @@ namespace Photos
         }
 
         void GetPhoto(object sender, EventArgs e)   {
-         
+
             Device.BeginInvokeOnMainThread(() =>
              {
                 DependencyService.Get<CameraInterface>().BringUpPhotoGallery();            
@@ -55,8 +65,19 @@ namespace Photos
 
         void AddComment(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new CommentPage(current_pic_id,pic[current_pic_id]));
+            layout_editor.IsVisible = true;
+            CarouselPics.IsVisible = false;
         }
+
+
+        void comment_button(object sender, EventArgs e)
+        {
+            var text = editor.Text;
+            comment.Add(new PictureComment(text, current_pic_id.ToString()));
+            layout_editor.IsVisible = false;
+            CarouselPics.IsVisible = true;
+        }
+
 
         void pos_sel(object sender, CarouselView.FormsPlugin.Abstractions.PositionSelectedEventArgs e) 
         {
@@ -68,7 +89,7 @@ namespace Photos
             if (pic.Count != 0)
             {
                 current_pic_id = e.NewValue;
-                l_counter.Text = counter.ToString() + "/" + e.NewValue.ToString() + "/" + pic[e.NewValue].Id;
+
             }
             Debug.WriteLine("something happend" );    
         }

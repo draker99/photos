@@ -8,34 +8,30 @@
     xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
 
    
-
  <ContentPage.ToolbarItems>  
   <ToolbarItem  Text="Add"
                 Priority="1" Order="Primary"
                 Clicked="GetPhoto"
-                Icon="plus-simple-7.png"
+                Icon="plus.png"
 
                 />  
-  <ToolbarItem  Name="Comment" Text="Comment"  
+  <ToolbarItem  x:Name="t_comment" Name="Comment" Text="Comment"  
                 Priority="1" Order="Primary"
                 Clicked="AddComment"
-                Icon="message-7.png"
+                Icon="message.png"
                 />  
   </ContentPage.ToolbarItems>  
 <Grid>
   <Grid.RowDefinitions>
-    <RowDefinition Height="5"/>
+    <RowDefinition Height="*"/>
     <RowDefinition Height="*" />
-    <RowDefinition Height="*" />
-
-
   </Grid.RowDefinitions>
   <Grid.ColumnDefinitions>
     <ColumnDefinition Width="*" />
   </Grid.ColumnDefinitions>
 
 <!-- ItemsSource="{Binding UserPicture}" -->
-  <ContentView Grid.Row="1" Grid.Column="0">
+  <ContentView Grid.Row="0" Grid.Column="0">
    <cv:CarouselViewControl 
                 PositionSelected="pos_sel" 
                 AnimateTransition="true" 
@@ -50,16 +46,20 @@
       </DataTemplate>
     </cv:CarouselViewControl.ItemTemplate>
   </cv:CarouselViewControl>
-  </ContentView>      
+  </ContentView>    
 
-  <Label x:Name="l_counter" Text="Please select your pictures with the + sign!" Grid.Row="2"></Label>     
+  <StackLayout Grid.Row="0" Grid.Column="0" x:Name="layout_editor">
+  <Editor HeightRequest="200" x:Name="editor" Text="Place your comment here" >
+  </Editor>
+  <Button x:Name="b_editor" Text="Post Comment" Clicked="comment_button"></Button>
+  </StackLayout>
   
-  <ScrollView Grid.Row="3" Grid.Column="0" Orientation='Both'>              
+  <ScrollView Grid.Row="1" Grid.Column="0" Orientation='Both'>              
     <ListView  x:Name="lstView" ItemTapped="tapped_listview">
             <ListView.ItemTemplate >
                 <DataTemplate>
                     <ViewCell>                       
-                            <Label Text="Test"/>                        
+                            <Label Text="{Binding Comment}"/>                        
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -93,7 +93,6 @@
     </ScrollView>
   -->
 </Grid>
-
-   
+      
 
 </ContentPage>

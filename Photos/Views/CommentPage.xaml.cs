@@ -29,14 +29,14 @@ namespace Photos
 
         }
 
-        void SaveComment (object sender, EventArgs e)
+        void SaveComment(object sender, EventArgs e)
         {
 
             //comment.Add(new PictureComment())
             var text = editor.Text;
 
-            comment.Add(new PictureComment(text,this.pic_id.ToString()));
-            Debug.WriteLine("Comment saved" + text);
+            comment.Add(new PictureComment(text, this.pic_id.ToString()));
+            Debug.WriteLine("Comment saved");
         }
     }
 }
