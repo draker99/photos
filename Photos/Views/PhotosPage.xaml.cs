@@ -6,7 +6,7 @@ using Xamarin.Forms.Xaml.Internals;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
-
+using System.Linq;
 
 namespace Photos
 {
@@ -15,7 +15,7 @@ namespace Photos
         public ObservableCollection<UserPicture> pic { get; set; }
         public UserPicture up = null;
         public ObservableCollection<PictureComment> comment { get; set; }
-        public int counter = 0;
+        public int counter = -1;
         public int current_pic_id = 0;
         public PhotosPage()
         {
@@ -24,6 +24,7 @@ namespace Photos
             UserPicture p = new UserPicture();
             pic = new ObservableCollection<UserPicture>();
             comment = new ObservableCollection<PictureComment>();
+            comment.Where((comment) => comment.PictureId.Contains("0"));
             CarouselPics.ItemsSource = pic;
             lstView.ItemsSource = comment;
             layout_editor.IsVisible = false;
@@ -41,6 +42,7 @@ namespace Photos
             // Getting data back from native system
             MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", (args) =>
             {
+                
                 Device.BeginInvokeOnMainThread(() =>
                 {
                 //Set the source of the image view with the byte array
@@ -48,6 +50,7 @@ namespace Photos
                 p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
                     pic.Add(new UserPicture(p.Picture,counter.ToString()));
                     counter++;
+                    CarouselPics.Position = counter;
 
                 Debug.WriteLine("I am the Message Center" +  pic.Count);
                    
@@ -56,6 +59,10 @@ namespace Photos
         }
 
         void GetPhoto(object sender, EventArgs e)   {
+            if (counter == -1)
+            {
+                pic.Clear();
+            }
 
             Device.BeginInvokeOnMainThread(() =>
              {
@@ -67,6 +74,7 @@ namespace Photos
         {
             layout_editor.IsVisible = true;
             CarouselPics.IsVisible = false;
+            editor.Focus();
         }
 
 
@@ -74,8 +82,10 @@ namespace Photos
         {
             var text = editor.Text;
             comment.Add(new PictureComment(text, current_pic_id.ToString()));
+            lstView.ItemsSource = comment.Where((comment) => comment.PictureId.Contains(current_pic_id.ToString()));
             layout_editor.IsVisible = false;
             CarouselPics.IsVisible = true;
+            editor.Text = "";
         }
 
 
@@ -89,19 +99,17 @@ namespace Photos
             if (pic.Count != 0)
             {
                 current_pic_id = e.NewValue;
+                lstView.ItemsSource =comment.Where((comment) => comment.PictureId.Contains(e.NewValue.ToString()));
+
 
             }
-            Debug.WriteLine("something happend" );    
+            Debug.WriteLine("POS_SEL: "  + comment.Count);    
         }
 
         /* deprecated */
         void tapped_listview(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item != null)
-            {
-                UserPicture up = (UserPicture)e.Item;
-              //  i_picture.Source = up.Picture;
-            }
+          //  comment.Where((comment) => comment.PictureId.Contains(e.NewValue.ToString()));
             Debug.WriteLine("Tapped Listview"+ e.Item);
         }
 
