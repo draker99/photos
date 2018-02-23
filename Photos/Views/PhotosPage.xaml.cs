@@ -45,14 +45,15 @@ namespace Photos
                 
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                //Set the source of the image view with the byte array
+                    //Set the source of the image view with the byte array  
+
 
                 p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
                     pic.Add(new UserPicture(p.Picture,counter.ToString()));
                     counter++;
                     CarouselPics.Position = counter;
 
-                Debug.WriteLine("I am the Message Center" +  pic.Count);
+                    Debug.WriteLine("I am the Message Center" +  DateTime.Now.ToString());
                    
                 });
             }); 
@@ -81,7 +82,7 @@ namespace Photos
         void comment_button(object sender, EventArgs e)
         {
             var text = editor.Text;
-            comment.Add(new PictureComment(text, current_pic_id.ToString()));
+                comment.Add(new PictureComment(text, current_pic_id.ToString(), DateTime.Now.ToString()));
             lstView.ItemsSource = comment.Where((comment) => comment.PictureId.Contains(current_pic_id.ToString()));
             layout_editor.IsVisible = false;
             CarouselPics.IsVisible = true;

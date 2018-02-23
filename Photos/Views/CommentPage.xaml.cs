@@ -35,7 +35,7 @@ namespace Photos
             //comment.Add(new PictureComment())
             var text = editor.Text;
 
-            comment.Add(new PictureComment(text, this.pic_id.ToString()));
+            comment.Add(new PictureComment(text, this.pic_id.ToString(),DateTime.Now.ToString()));
             Debug.WriteLine("Comment saved");
         }
     }

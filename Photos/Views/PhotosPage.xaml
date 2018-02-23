@@ -51,15 +51,25 @@
   <StackLayout Grid.Row="0" Grid.Column="0" x:Name="layout_editor">
   <Editor HeightRequest="200" x:Name="editor" Text="" >
   </Editor>
-  <Button x:Name="b_editor" Text="Post Comment" Clicked="comment_button"></Button>
+  <Button x:Name="b_editor" Image="paper_plane.png" Text="Post Comment" Clicked="comment_button"></Button>
   </StackLayout>
   
   <ScrollView Grid.Row="1" Grid.Column="0" Orientation='Both'>              
     <ListView  x:Name="lstView" ItemTapped="tapped_listview">
             <ListView.ItemTemplate >
                 <DataTemplate>
-                    <ViewCell>                       
-                            <Label Text="{Binding Comment}"/>                        
+                    <ViewCell>    
+                            <Grid>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="*"/>
+  </Grid.RowDefinitions>
+  <Grid.ColumnDefinitions>
+    <ColumnDefinition Width="100" />
+    <ColumnDefinition Width="Auto" />
+  </Grid.ColumnDefinitions>
+                            <Label VerticalOptions="Start" Scale="0.6" Text="{Binding CurrentDate, StringFormat='{0:MMMM dd, yyyy hh\\:mm}'}" Grid.Row="0" Grid.Column="0"/>
+                            <Label Scale="0.9" Text="{Binding Comment}" Grid.Row="0" Grid.Column="1"/>
+                                </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

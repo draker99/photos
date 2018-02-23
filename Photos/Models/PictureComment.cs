@@ -5,6 +5,7 @@ namespace Photos
     {
         public string Id { get; set; }
         public string PictureId { get; set; }
+        public string CurrentDate { get; set; }
         public string Comment { get; set; }
 
         public PictureComment()
@@ -16,10 +17,11 @@ namespace Photos
             this.Comment = comment;
         }
 
-        public PictureComment(string comment, string pic_id)
+        public PictureComment(string comment, string pic_id, string currentdate)
         {
             this.Comment = comment;
             this.PictureId = pic_id;
+            this.CurrentDate = currentdate;
         }
     }
 }
