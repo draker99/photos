@@ -17,11 +17,12 @@ namespace Photos
             this.Comment = comment;
         }
 
-        public PictureComment(string comment, string pic_id, string currentdate)
+        public PictureComment(string comment, string pic_id, string comm_id, string currentdate)
         {
             this.Comment = comment;
             this.PictureId = pic_id;
             this.CurrentDate = currentdate;
+            this.Id = comm_id;
         }
     }
 }

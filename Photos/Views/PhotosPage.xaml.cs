@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage;
 
 namespace Photos
 {
@@ -17,10 +19,15 @@ namespace Photos
         public ObservableCollection<PictureComment> comment { get; set; }
         public int counter = -1;
         public int current_pic_id = 0;
+        public AzureRepo ar;
+
         public PhotosPage()
         {
             InitializeComponent();
-         
+
+            ar = new AzureRepo();
+
+
             UserPicture p = new UserPicture();
             pic = new ObservableCollection<UserPicture>();
             comment = new ObservableCollection<PictureComment>();
@@ -30,27 +37,35 @@ namespace Photos
             layout_editor.IsVisible = false;
 
 
+
+            /*
             Image img = new Image
             {
                 Source = "photo_begin"
             };
+            */
 
-            pic.Add(new UserPicture(img.Source, "0"));
-
+        //    pic.Add(new UserPicture(img.Source, "0",null));
 
            
             // Getting data back from native system
             MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", (args) =>
             {
-                
-                Device.BeginInvokeOnMainThread(() =>
+
+                // async lambda expression because of blob storage
+                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     //Set the source of the image view with the byte array  
-
-
-                p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
-                    pic.Add(new UserPicture(p.Picture,counter.ToString()));
                     counter++;
+
+                    p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
+                    p.BytePicture = (byte[])args;
+                    up = new UserPicture(p.Picture, counter.ToString(), p.BytePicture);
+
+
+                    pic.Add(up);
+                    await ar.AddPicture(up);
+
                     CarouselPics.Position = counter;
 
                     Debug.WriteLine("I am the Message Center" +  DateTime.Now.ToString());
@@ -58,6 +73,7 @@ namespace Photos
                 });
             }); 
         }
+
 
         void GetPhoto(object sender, EventArgs e)   {
             if (counter == -1)
@@ -79,10 +95,15 @@ namespace Photos
         }
 
 
-        void comment_button(object sender, EventArgs e)
+        async void comment_button(object sender, EventArgs e)
         {
+            
             var text = editor.Text;
-                comment.Add(new PictureComment(text, current_pic_id.ToString(), DateTime.Now.ToString()));
+            PictureComment c = new PictureComment(text, current_pic_id.ToString(),comment.Count.ToString(), DateTime.Now.ToString());
+            comment.Add(c);
+
+            await ar.AddComment(c);
+
             lstView.ItemsSource = comment.Where((comment) => comment.PictureId.Contains(current_pic_id.ToString()));
             layout_editor.IsVisible = false;
             CarouselPics.IsVisible = true;
@@ -113,15 +134,5 @@ namespace Photos
           //  comment.Where((comment) => comment.PictureId.Contains(e.NewValue.ToString()));
             Debug.WriteLine("Tapped Listview"+ e.Item);
         }
-
-    /*    public async void Insert()   {
-
-            AzureConnection conn = new AzureConnection();
-
-            UserPicture picture = new UserPicture { AccountId = "Juhu!" };
-            await conn.client.GetTable<UserPicture>().InsertAsync(picture);
-            
-        }
-        */
     }
 }

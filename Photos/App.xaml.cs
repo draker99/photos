@@ -5,21 +5,25 @@ namespace Photos
 {
     public partial class App : Application
     {
+        NavigationPage np;
+        PhotosPage pp;
         public App()
         {
             InitializeComponent();
+            pp = new PhotosPage();
+            np = new NavigationPage(pp);
 
-           MainPage = new NavigationPage(new PhotosPage())
-            {
-                BarTextColor = Color.Black
-            };
-           //MainPage = new PhotosPage();
+            MainPage = np;
+            //MainPage = new PhotosPage();
                
         }
 
-        protected override void OnStart()
+        protected async override void OnStart()
         {
             // Handle when your app starts
+            AzureRepo ar = new AzureRepo();
+            await ar.getPictureBlob(pp);
+            await ar.getCommentBlob(pp);
         }
 
         protected override void OnSleep()

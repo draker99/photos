@@ -60,13 +60,13 @@
                 <DataTemplate>
                     <ViewCell>    
                             <Grid>
-  <Grid.RowDefinitions>
-    <RowDefinition Height="*"/>
-  </Grid.RowDefinitions>
-  <Grid.ColumnDefinitions>
-    <ColumnDefinition Width="100" />
-    <ColumnDefinition Width="Auto" />
-  </Grid.ColumnDefinitions>
+                          <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                          </Grid.RowDefinitions>
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                          </Grid.ColumnDefinitions>
                             <Label VerticalOptions="Start" Scale="0.6" Text="{Binding CurrentDate, StringFormat='{0:MMMM dd, yyyy hh\\:mm}'}" Grid.Row="0" Grid.Column="0"/>
                             <Label Scale="0.9" Text="{Binding Comment}" Grid.Row="0" Grid.Column="1"/>
                                 </Grid>

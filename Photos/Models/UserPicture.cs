@@ -10,13 +10,14 @@ namespace Photos
         public string AccountId { get; set; }
       
         public ImageSource Picture { get; set; }
+        public byte[] BytePicture { get; set; }
 
 
-        public UserPicture(ImageSource picture, string id)
+        public UserPicture(ImageSource picture, string id, byte[] bytepicture)
         {
             this.Picture = picture;
             this.Id = id;
-           
+            this.BytePicture = bytepicture;   
         }
 
         public UserPicture()
