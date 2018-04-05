@@ -12,6 +12,7 @@ using Android.Graphics;
 using System.IO;
 using Xamarin.Forms;
 using Android.Provider;
+using Microsoft.WindowsAzure;
 
 namespace Photos.Droid
 {
@@ -25,6 +26,8 @@ namespace Photos.Droid
 
             base.OnCreate(bundle);
 
+           // Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
+            global::CarouselView.FormsPlugin.Android.CarouselViewRenderer.Init();
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             LoadApplication(new App());

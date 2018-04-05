@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using Microsoft.WindowsAzure.MobileServices;
+//using Microsoft.WindowsAzure.MobileServices;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml.Internals;
 using System.Collections.Generic;
@@ -37,6 +37,7 @@ namespace Photos
             layout_editor.IsVisible = false;
 
 
+            Debug.WriteLine("Counter Settings: " + pic.Count.ToString());
 
             /*
             Image img = new Image
@@ -55,20 +56,21 @@ namespace Photos
                 // async lambda expression because of blob storage
                  Device.BeginInvokeOnMainThread(async () =>
                 {
-                    //Set the source of the image view with the byte array  
-                    counter++;
+                //Set the source of the image view with the byte array  
+                counter++;
 
-                    p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
-                    p.BytePicture = (byte[])args;
-                    up = new UserPicture(p.Picture, counter.ToString(), p.BytePicture);
+                p.Picture = ImageSource.FromStream(() => new MemoryStream((byte[])args));
+                p.BytePicture = (byte[])args;
+                up = new UserPicture(p.Picture, counter.ToString(), p.BytePicture);
 
 
-                    pic.Add(up);
-                    await ar.AddPicture(up);
+                pic.Add(up);
+                await ar.AddPicture(up);
+                    Debug.WriteLine("Added Picture" + pic.Count.ToString());
 
                     CarouselPics.Position = counter;
 
-                    Debug.WriteLine("I am the Message Center" +  DateTime.Now.ToString());
+                Debug.WriteLine("I am the Message Center" + counter.ToString());
                    
                 });
             }); 
@@ -121,11 +123,11 @@ namespace Photos
             if (pic.Count != 0)
             {
                 current_pic_id = e.NewValue;
+                Debug.WriteLine("Current Pic Id: " + current_pic_id.ToString());
                 lstView.ItemsSource =comment.Where((comment) => comment.PictureId.Contains(e.NewValue.ToString()));
-
-
             }
-            Debug.WriteLine("POS_SEL: "  + comment.Count);    
+            counter = pic.Count;
+            Debug.WriteLine("Comment Counter: "  + comment.Count);    
         }
 
         /* deprecated */

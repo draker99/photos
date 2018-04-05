@@ -4,6 +4,8 @@ using Android.Content;
 using Android.Provider;
 using Xamarin.Forms;
 
+
+[assembly: Dependency(typeof(Photos.Droid.CameraAndroid))]
 namespace Photos.Droid
 {
     public class CameraAndroid : CameraInterface
@@ -18,7 +20,7 @@ namespace Photos.Droid
             imageIntent.SetType("image/*");
             imageIntent.SetAction(Intent.ActionGetContent);
 
-          //  ((Activity)Context).StartActivityForResult(Intent.CreateChooser(imageIntent, "Select photo"), 1);
+            ((Activity)Forms.Context).StartActivityForResult(Intent.CreateChooser(imageIntent, "Select photo"), 1);
         }
     }
 }

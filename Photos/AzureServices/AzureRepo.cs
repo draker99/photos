@@ -37,6 +37,7 @@ namespace Photos
             CloudBlockBlob blockBlob = container.GetBlockBlobReference("photos_blob" + pic.Id);
 
             blockBlob.Metadata.Add("Id", pic.Id);
+            Debug.WriteLine("Length of picture: " + pic.BytePicture.Length +  " - " + pic.Id);
             await blockBlob.UploadFromByteArrayAsync(pic.BytePicture, 0, pic.BytePicture.Length);
         }
 
@@ -51,7 +52,7 @@ namespace Photos
             CloudBlockBlob blockBlob = container.GetBlockBlobReference("comments_blob" + com.Id);
 
             blockBlob.Metadata.Add("Id", com.Id);
-            blockBlob.Metadata.Add("PictureId", com.Id);
+            blockBlob.Metadata.Add("PictureId", com.PictureId);
             blockBlob.Metadata.Add("PictureDate", com.CurrentDate);
             await blockBlob.UploadTextAsync(com.Comment);
         }
@@ -139,7 +140,7 @@ namespace Photos
                     Debug.WriteLine("Block blob of length {0}: {1}", PictureId, comment);
                   
                     pc = new PictureComment(comment,PictureId,Id,PictureDate);
-                    page.comment.Add(pc);
+                    page.comment.Add(pc);   
                 }
             }
         }
